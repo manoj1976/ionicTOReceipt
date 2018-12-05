@@ -4,6 +4,9 @@ import { Platform, MenuController, Nav } from 'ionic-angular';
 
 import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ListPage } from '../pages/list/list';
+import {SettingsPage} from '../pages/settings/settings';
+import {BarcodereaderPage} from '../pages/barcodereader/barcodereader';
+import {RegisterPage} from '../pages/register/register';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -17,7 +20,7 @@ export class MyApp {
 
   // make HelloIonicPage the root (or first) page
   rootPage = HelloIonicPage;
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any,tag:string}>;
 
   constructor(
     public platform: Platform,
@@ -29,8 +32,11 @@ export class MyApp {
 
     // set our app's pages
     this.pages = [
-      { title: 'Hello Ionic', component: HelloIonicPage },
-      { title: 'My First List', component: ListPage }
+      //{ title: 'Hello Ionic', component: HelloIonicPage, tag: 'hello' },
+     // { title: 'My First List', component: ListPage,tag:'list' },
+      { title: 'Transfer Order', component: BarcodereaderPage,tag:'barcodereader' },
+      { title: 'Settings', component: SettingsPage,tag:'settings' },
+      {title:'Register',component:RegisterPage,tag:'register'}
     ];
   }
 
@@ -43,10 +49,18 @@ export class MyApp {
     });
   }
 
-  openPage(page) {
+  openPage(page,tag) {
     // close the menu when clicking a link from the menu
     this.menu.close();
     // navigate to the new page if it is not the current page
-    this.nav.setRoot(page.component);
+    if (tag=='barcodereader')
+      this.nav.push(BarcodereaderPage);
+    else if (tag=='settings')
+      this.nav.push(SettingsPage);
+    else if (tag=='register')
+      this.nav.push(RegisterPage);
+    else
+      this.nav.setRoot(page.component);
+
   }
 }
